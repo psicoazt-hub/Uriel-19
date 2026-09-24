@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEMORIA DE CÁLCULO ESTRUCTURAL // U-19</title>
+  <style>
+    :root {
+      --bg: #07152b;
+      --grid: rgba(0, 229, 255, 0.12);
+      --cyan: #00e5ff;
+      --white: #f8fafc;
+      --dim: #94a3b8;
+      --card-bg: rgba(11, 27, 54, 0.95);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      background-image: 
+        linear-gradient(to right, var(--grid) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+      background-size: 20px 20px;
+      color: var(--white);
+      font-family: 'Courier New', Courier, monospace;
+      padding: 16px;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .sheet {
+      width: 100%;
+      max-width: 780px;
+      border: 2px solid var(--cyan);
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.25);
+      background: var(--card-bg);
+      padding: 20px;
+    }
+    .header-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--cyan);
+      margin-bottom: 20px;
+      font-size: 11px;
+    }
+    .header-table td {
+      border: 1px solid var(--cyan);
+      padding: 6px 8px;
+    }
+    .tag { color: var(--cyan); font-weight: bold; }
+    .specs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .spec-box {
+      border: 1px dashed var(--cyan);
+      padding: 8px;
+      background: rgba(0, 229, 255, 0.05);
+      font-size: 10px;
+    }
+    .spec-box .val {
+      font-size: 13px;
+      color: var(--cyan);
+      font-weight: bold;
+      margin-top: 3px;
+    }
+    .btn-action {
+      display: block;
+      width: 100%;
+      background: transparent;
+      border: 2px solid var(--cyan);
+      color: var(--cyan);
+      padding: 15px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      text-transform: uppercase;
+      margin: 16px 0;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .btn-action:active {
+      background: var(--cyan);
+      color: #07152b;
+    }
+    #letter-container {
+      display: none;
+      border-top: 1px solid var(--cyan);
+      padding-top: 20px;
+      margin-top: 16px;
+    }
+    .blueprint-body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
+      line-height: 1.75;
+      color: #f1f5f9;
+      text-align: justify;
+      white-space: pre-wrap;
+    }
+    .blueprint-body strong { color: var(--cyan); }
+    .stamp-box {
+      display: none;
+      border: 2px solid #ef4444;
+      color: #ef4444;
+      padding: 10px;
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 11px;
+      margin-top: 24px;
+      line-height: 1.4;
+      letter-spacing: 1px;
+      font-family: 'Courier New', Courier, monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="sheet">
+    <table class="header-table">
+      <tr>
+        <td><span class="tag">PROYECTO:</span> CIMENTACIÓN U-19</td>
+        <td><span class="tag">PLANO:</span> EST-01/01</td>
+      </tr>
+      <tr>
+        <td><span class="tag">UBICACIÓN:</span> MORELIA, MICH.</td>
+        <td><span class="tag">ESTATUS:</span> EN SERVICIO // ACTIVO</td>
+      </tr>
+      <tr>
+        <td colspan="2"><span class="tag">ELEMENTO:</span> URIEL ZAVALA // ING. CIVIL & EJECUCIÓN ACÚSTICA</td>
+      </tr>
+    </table>
+
+    <div class="specs-grid">
+      <div class="spec-box">
+        RESISTENCIA f'c
+        <div class="val">ALTA CAPACIDAD</div>
+      </div>
+      <div class="spec-box">
+        TIEMPO DE FRAGUADO
+        <div class="val">19 AÑOS (COMPLETO)</div>
+      </div>
+      <div class="spec-box">
+        TENSIÓN EN BORDONES
+        <div class="val">AFINACIÓN PRECISA</div>
+      </div>
+      <div class="spec-box">
+        GARANTÍA ESTRUCTURAL
+        <div class="val">DE POR VIDA</div>
+      </div>
+    </div>
+
+    <button class="btn-action" id="unlock-btn" onclick="iniciarCalculo()">
+      [ EJECUTAR MEMORIA DE CÁLCULO ESTRUCTURAL ]
+    </button>
+
+    <div id="letter-container">
+      <div class="blueprint-body" id="typewriter-text"></div>
+      <div class="stamp-box" id="stamp">
+        DICTAMEN TÉCNICO: CIMENTACIÓN COLADA HACE 19 AÑOS.<br>
+        GARANTÍA DE RESPALDO: DE POR VIDA.<br>
+        — PAPÁ
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const textoCompleto = `Uriel:
+
+Cumplir 19 años es llegar a esa edad donde uno siente que el mundo le queda chico, que ya se las sabe de todas todas y que puede resolver cualquier problema de un solo golpe. Te lo digo porque yo también tuve tu edad, también sentí esa lumbre y también creí que nadie tenía nada que enseñarme.
+
+Hoy te veo plantado en Morelia, abriéndote paso en la ingeniería y tocando el bajoquinto con un talento cabrón. Me da un orgullo enorme verte ejecutar, y me da más gusto saber que en los dedos traes más lumbre de la que yo tenía. Pero nunca olvides una regla básica del escenario y de la vida: el talento te da velocidad, pero solo el colmillo y la experiencia te dan el aguante. Arriba de una tarima cualquiera se luce cuando el sonido está perfecto; el verdadero músico se demuestra cuando se revienta una cuerda a medio set, cuando el monitor falla, cuando el ambiente es hostil y, aun con todo en contra, tienes la cabeza fría para no ser impulsivo y sacar la tocada adelante.
+
+Si hoy sientes que el camino está plano, que la vida ha sido noble y que las cosas se resuelven casi solas, no es por obra de la suerte. La tierra se siente firme bajo tus pies porque hubo quienes antes que tú nos partimos la madre para emparejarte el piso. A mis 17 años, cuando la vida me cambió de golpe, no me rajé. Renuncié a mis propios planes, dejé atrás conservatorios y comodidades, y con el respaldo de mis viejos di la cara para que tú tuvieras nombre, techo, escuela y un lugar seguro donde crecer. Hubo batallas que se pelearon en silencio, noches en vela y sacrificios que tú nunca tuviste que ver ni cargar, porque la chamba de un padre no es pasarle sus angustias al hijo, sino aguantar el peso para que el hijo vuele más alto que uno.
+
+Sé perfectamente que no soy perfecto. He cometido mis errores y la vida no siempre me ha sonreído en lo económico como yo hubiera querido, pero el amor, el respaldo y la vida entera que me jugué por ti no tienen duda ni caducidad. No me interesa que seas como yo; mi mayor victoria es precisamente que seas mejor, que llegues más lejos y que no tropieces con las piedras donde yo me pegué. Pero el día que la vida se ponga perra —porque la vida a todos nos pone a prueba tarde o temprano—, recuerda de dónde vienes, quiénes construyeron los cimientos donde estás parado y que aquí tienes a un padre que te conoce el paso desde el primer día y que jamás te va a dar la espalda.
+
+Aprovecha a la gente que te ama mientras la tienes de frente. Aprende a escuchar antes de juzgar y no dejes que la soberbia te gane, porque el verdadero chingón es el que sabe resolver con humildad.
+
+Te amo, te respeto y te admiro por lo que estás logrando. Que sean 19 años bien vividos, bien tocados y con la mirada siempre al frente.
+
+Feliz cumpleaños, hijo.`;
+
+    let i = 0;
+    function iniciarCalculo() {
+      const btn = document.getElementById('unlock-btn');
+      btn.innerText = "[ PROCESANDO DATOS ESTRUCTURALES... ]";
+      btn.onclick = null;
+      document.getElementById('letter-container').style.display = 'block';
+      escribirTexto();
+    }
+
+    function escribirTexto() {
+      if (i < textoCompleto.length) {
+        document.getElementById('typewriter-text').textContent += textoCompleto.charAt(i);
+        i++;
+        setTimeout(escribirTexto, 12);
+      } else {
+        document.getElementById('stamp').style.display = 'inline-block';
+        const btn = document.getElementById('unlock-btn');
+        btn.innerText = "[ CÁLCULO VERIFICADO // ESTRUCTURA SÓLIDA ]";
+        btn.style.borderColor = "#22c55e";
+        btn.style.color = "#22c55e";
+      }
+    }
+  </script>
+</body>
+</html>
